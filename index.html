@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+  <TITLE>Open Pop up on time</TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+<script language="JavaScript">
+
+<!--
+// please keep these lines on when you copy the source
+// made by: Nicolas - http://www.javascript-page.com
+
+var timerID = 0;
+var tStart  = null;
+var adrlist = new Array();
+var tim = 0;
+var searchURL = "";
+
+function fnsplit(txtID)
+{ 
+		var ctr = document.getElementById(txtID);
+		var str = ctr.value;
+		adrlist = str.split(',');
+		adrlist.sort(() => (Math.random() > .5) ? 1 : -1);
+		var ctr1 = document.getElementById('txtcur');
+		ctr1.value = 0;
+}
+
+function UpdateTimer() {
+   if(timerID) {
+      clearTimeout(timerID);
+      clockID  = 0;
+   }
+
+   if(!tStart)
+      tStart   = new Date();
+
+   var   tDate = new Date();
+   var   tDiff = tDate.getTime() - tStart.getTime();
+
+   tDate.setTime(tDiff);
+   var ctr = document.getElementById('theTime');
+   ctr.value = "" 
+			   + tDate.getMinutes() + ":" 
+			   + tDate.getSeconds();
+   
+   timerID = setTimeout("UpdateTimer()", 1000);
+   tim++;
+   if (tim%5 == 1)
+   {	
+		var cur = document.getElementById('txtcur');
+			
+		if (cur.value < 30 && adrlist[cur.value] != '')
+		{
+			//window.open(adrlist[cur.value]);
+			//parent.frmtarget.location = 'https://www.bing.com/search?q=' + adrlist[cur.value];
+			parent.frmtarget.location =  searchURL   + adrlist[cur.value];
+			//document.getElementById('URLValue').value =  adrlist[cur.value];
+			cur.value++;
+		}
+		else
+		{
+			parent.frmtarget.location = 'http://www.google.com';
+			Stop();
+			alert('All PopUps Completed');
+		}
+
+   }
+}
+
+function Start(srcURL, txtID) {
+   searchURL = srcURL;
+
+   fnsplit(txtID);
+   tStart   = new Date();
+   var ctr = document.getElementById('theTime');
+   ctr.value = "00:00";
+
+   timerID  = setTimeout("UpdateTimer()", 1000);
+}
+
+function Stop() {
+   if(timerID) {
+      clearTimeout(timerID);
+      timerID  = 0;
+   }
+	adrlist = null;
+	tStart = null;
+}
+
+function Reset() {
+   tStart = null;
+   var ctr = document.getElementById('theTime');
+   ctr.value = "00:00";
+   adrlist = null;
+}
+
+//-->
+
+</script>
+</head>
+<body onload="Reset()" onunload="Stop()">
+<center><table>
+   <tr>
+      <td align=center>
+         Timer: <input type=text id="theTime" onchange="msg()" size=5>
+      </td>
+	  <td align=center>
+         <input type=button id="start" value="Start1" onclick="Start('https://www.bing.com/search?q=', 'txtCit')">
+      </td>
+	  <td align=center>
+         <input type=button id="start2" value="Start2" onclick="Start('https://www.bing.com/news/search?q=','txtNews')">
+      </td>
+      <td align=center>
+         <input type=button id="stop" value="Stop" onclick="Stop()">
+      </td>
+      <td align=center>
+         <input type=button id="reset" value="Reset" onclick="Reset()">
+      </td>
+	  <td colspan=4 align=center>
+		<INPUT TYPE=text id="txtcur">
+	  </td>
+   </tr>
+   <tr><td></td></tr>
+   <tr>
+
+   </tr>
+   <tr>
+
+   </tr>
+   <tr>
+      <td colspan=5 align=center>
+         <TEXTAREA id="txtCit" ROWS="3" COLS="60">Chennai Kovai Salem Erode Karur Tirunelveli Madurai Trichy Dindigul Sattur mettur Kerala Maharashtra Odisha Bihar Jharkand Delhi Mumbai Kolkatta Bangalore Hyderabad Rajastan Gujarat Punjab Srinagar Amrister Goa Pondicherry Assam Manipur Mizoram</TEXTAREA><br/>
+         <TEXTAREA id="txtNews" ROWS="3" COLS="60">Africa,Americas,Asia pacific,Boxing,CBB,CFB,Cricket,Cycling,eSports,Europe,Golf,Horse racing,IndyCar,Middle east,Midwest,MLB,MMA,NASCAR,NBA,NFL,NHL,NHRA,Northeast,Soccer,Softball,South,Tennis,West,Wrestling,WWE,Business,Entertainment,Politics,Science,Sports,Technology,Top stories,U.S.,World</TEXTAREA><br/>
+		 <!--<INPUT TYPE="submit" VALUE="PickAddress" onclick="fnsplit()">-->
+		 <input type=text id="URLValue" value="11" />
+      </td>
+   </tr>
+</table>
+  <iframe name="frmtarget" src = "" style="width:1500px; height:850px"></iframe>
+  </center>
+</HTML>
+
+
+
+
+<!--
+
+
+https://www.bing.com/search?q=Kovai
+
+ Aardvark Alligator Alpaca Anaconda Ant Antelope Ape Aphid Armadillo Asp Ass Baboon Badger Barracuda Bass Bat Bear Beaver Bedbug Bee Beetle Bird Bison Bobcat Buffalo Butterfly Buzzard Camel Caribou Carp Cat Caterpillar Catfish Cheetah Chicken Chimpanzee Chipmunk Cobra Cod Condor Cougar Cow Coyote Crab Crane Cricket Crocodile Crow Cuckoo Deer Dinosaur Dog Dolphin Donkey Dove Dragonfly Duck Eagle Eel Elephant Emu Falcon Ferret Finch Fish Flamingo Flea Fly Fox Frog Goat Goose Gopher Gorilla Grasshopper Hamster HareHawk Hippopotamus Horse Hummingbird Husky Iguana Impala Kangaroo Ladybug Leopard Lion Lizard Llama Lobster Mongoose Monkey Moose Mosquito Moth Mouse Mule Octopus Orca Ostrich Otter Owl Ox Oyster Panda Parrot Peacock Pelican Penguin Perch Pheasant Pig Pigeon Porcupine Quail Rabbit Raccoon Rat Rattlesnake Raven Rooster Sheep Shrew Skunk Snail Snake Spider Tiger Walrus Whale Wolf Zebra
+
+
+
+Africa,Americas,Asia pacific,Boxing,CBB,CFB,Cricket,Cycling,eSports,Europe,Golf,Horse racing,IndyCar,Middle east,Midwest,MLB,MMA,NASCAR,NBA,NFL,NHL,NHRA,Northeast,Soccer,Softball,South,Tennis,West,Wrestling,WWE,Business,Entertainment,Politics,Science,Sports,Technology,Top stories,U.S.,World
+
+  -->
